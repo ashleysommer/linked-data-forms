@@ -1,0 +1,25 @@
+{{#form.group}}
+  {{#if label}}<label for="{{concat elementId '-val'}}">{{label}}</label>{{/if}}
+  <div class="input-group">
+    {{#if changableKind}}
+      <div class="input-group-btn">
+        {{#bs-dropdown as |dd|}}{{#dd.button}}URI Ref&nbsp;<span class="caret"></span>{{/dd.button}}
+          <ul class="dropdown-menu dropdown-menu-left" onclick={{action (get this "kindChanged")}}>
+            <li><a href="#">Free text</a></li>
+            <li><a href="#">Number</a></li>
+            <li><a href="#">Boolean</a></li>
+          </ul>
+        {{/bs-dropdown}}
+      </div>
+    {{else}}
+      <span class="input-group-addon">URI Ref</span>
+    {{/if}}
+    {{input type="text" value=(mut value) id=(concat elementId '-val') class="form-control" placeholder=placeholder}}
+    {{#if showSearchBtn}}
+      <div class="input-group-btn">
+      <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+      </div>
+    {{/if}}
+  </div>
+{{/form.group}}
+{{yield}}

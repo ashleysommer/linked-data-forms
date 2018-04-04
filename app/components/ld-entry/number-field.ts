@@ -1,0 +1,40 @@
+import Component from '@ember/component';
+import { computed, get, set } from '@ember/object';
+
+export default class LdEntryNumberField extends Component.extend({
+  hasNumType: computed("numType", function(this: LdEntryNumberField): boolean {
+    return (get(this, "numType") != undefined);
+  }),
+  actions: {
+    onNumTypeChanged(click) {
+      if (!click) {
+        return false;
+      }
+      const target = click.target;
+      if (!target) {
+        return false;
+      }
+      if (!(target.tagName.toUpperCase() == "A")) {
+        return false;
+      }
+      let newNumType = target.innerText;
+      if (newNumType.toUpperCase() == "NO") {
+        set(this, "numType", undefined);
+        set(this, "showNumTypeBox", false);
+        return false;
+      }
+      set(this, "numType", newNumType);
+    }
+  }
+
+}) {
+  // normal class body definition here
+  form: any;
+  value?: string;
+  numType?: string;
+  placeholder?: string;
+  label?: string;
+  showNumTypeBox: boolean = undefined;
+  changeableKind: boolean = false;
+
+};

@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+{{#bs-form as |form|}}
+  {{ld-entry-field kind="string" value=(mut val1) label="place me here" form=form}}
+{{/bs-form}}
+  {{val1}}
+{{outlet}}
+    </div>
+  </div>
+</div>

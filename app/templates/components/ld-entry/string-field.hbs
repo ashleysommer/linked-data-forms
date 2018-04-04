@@ -1,0 +1,41 @@
+{{#form.group}}
+  {{#if label}}<label for="{{concat elementId '-val'}}">{{label}}</label>{{/if}}
+  <div class="input-group">
+    {{#if changableKind}}
+      <div class="input-group-btn">
+        {{#bs-dropdown as |dd|}}{{#dd.button}}Free text&nbsp;<span class="caret"></span>{{/dd.button}}
+          <ul class="dropdown-menu dropdown-menu-left" onclick={{action (get this "kindChanged")}}>
+            <li><a href="#">UriRef</a></li>
+            <li><a href="#">Number</a></li>
+            <li><a href="#">Boolean</a></li>
+          </ul>
+        {{/bs-dropdown}}
+      </div>
+    {{else}}
+      <span class="input-group-addon">Free text</span>
+    {{/if}}
+    {{input type="text" value=(mut value) id=(concat elementId '-val') class="form-control" placeholder=placeholder}}
+    {{#if showLangBox}}
+    <div class="input-group-btn">
+      {{#bs-dropdown as |dd|}}{{#dd.button}}{{#if hasLanguage}}{{language}}{{else}}Language{{/if}}&nbsp;<span class="caret"></span>{{/dd.button}}
+      {{!--{{#dd.menu align="right" tagName="div" as |menu|}}--}}
+        <ul class="dropdown-menu dropdown-menu-right" onclick={{action "onLangChanged"}}>
+        <li><a href="#">en</a></li>
+        <li><a href="#">en-AU</a></li>
+        <li><a href="#">en-GB</a></li>
+        <li><a href="#">fr</a></li>
+        <li class="divider"></li>
+        <li><a href="#">No</a></li>
+        </ul>
+      {{!--{{/dd.menu}}--}}
+      {{/bs-dropdown}}
+    </div>
+    {{else}}
+    <span class="input-group-addon">
+      Lang?&nbsp;<span class="va-text-bottom">{{input type="checkbox" class="form-inline" checked=(mut showLangBox)}}</span>
+    </span>
+    {{/if}}
+
+  </div>
+{{/form.group}}
+{{yield}}
