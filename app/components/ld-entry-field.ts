@@ -1,16 +1,11 @@
 import Component from '@ember/component';
-import {computed, get, set} from '@ember/object';
-import LdEntryStringField from "linked-data-forms/components/ld-entry/string-field";
-import LdEntryUrirefField from "linked-data-forms/components/ld-entry/uriref-field";
-import {bind} from "@ember/runloop";
-import partials = Handlebars.partials;
-import apply = Reflect.apply;
+import {computed, get, observer, set} from '@ember/object';
 
 export default class LdEntryField extends Component.extend({
-  kind: null,
   // anything which *must* be merged to prototype here
   isString: computed("kind", function(this: LdEntryField): boolean {
-    return (get(this, "kind") == "string");
+    const kind = get(this, "kind");
+    return (kind == "string" || kind == "free text");
   }),
   isUriRef: computed("kind", function(this: LdEntryField): boolean {
     return (get(this, "kind") == "uriref");
@@ -18,7 +13,10 @@ export default class LdEntryField extends Component.extend({
   isNumber: computed("kind", function(this: LdEntryField): boolean {
     return (get(this, "kind") == "number");
   }),
-  entryFieldComponent: computed("kind", "isString", "isUriRef", "isNumber", function(this: LdEntryField): any {
+  isBoolean: computed("kind", function(this: LdEntryField): boolean {
+    return (get(this, "kind") == "boolean");
+  }),
+  entryFieldComponent: computed("kind", "isString", "isUriRef", "isNumber", "isBoolean", function(this: LdEntryField): any {
     const kind = get(this, "kind");
     if (get(this, "isString")) {
       //return LdEntryStringField;
@@ -32,6 +30,14 @@ export default class LdEntryField extends Component.extend({
       //return LdEntryNumberField;
       return "ld-entry/number-field";
     }
+    if (get(this, "isBoolean")) {
+      //return LdEntryBooleanField;
+      return "ld-entry/boolean-field";
+    }
+  }),
+  kindObv: observer("kind", function(this: LdEntryField, ev){
+    const kind = get(this, "kind");
+    console.debug(this);
   }),
   actions: {
     kindChanged(click) {
@@ -51,7 +57,7 @@ export default class LdEntryField extends Component.extend({
   },
 }) {
   // normal class body definition here
-  //kind: string; //required
+  kind: string; //required
   value?: any;
   changeableKind: boolean = false;
 

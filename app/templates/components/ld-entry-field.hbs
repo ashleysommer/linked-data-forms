@@ -1,3 +1,6 @@
+{{kind}}
 {{input type="checkbox" checked=(mut changableKind)}}
-{{component (get this "entryFieldComponent") value=(mut value) label=label placeholder=placeholder form=form changableKind=changableKind kindChanged=kindChanged}}
+{{#component (get this "entryFieldComponent") value=(mut value) label=label placeholder=placeholder form=form changableKind=changableKind kindChanged=kindChanged as |field|}}
+  {{field.lexicalString}}
+{{/component}}
 {{yield}}

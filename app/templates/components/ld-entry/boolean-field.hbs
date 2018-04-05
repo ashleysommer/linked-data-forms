@@ -1,0 +1,17 @@
+{{#form.group}}
+  {{#if label}}<label for="{{concat elementId '-val'}}">{{label}}</label>{{/if}}
+  {{#if changableKind}}
+    {{#bs-dropdown as |dd|}}{{#dd.button}}Boolean&nbsp;<span class="caret"></span>{{/dd.button}}
+      <ul class="dropdown-menu dropdown-menu-left" onclick={{action (get this "kindChanged")}}>
+        <li><a href="#">Free text</a></li>
+        <li><a href="#">Number</a></li>
+        <li><a href="#">URI Ref</a></li>
+      </ul>
+    {{/bs-dropdown}}
+  {{/if}}
+  {{#bs-button-group value=(mut value) type="radio" onChange=(action (mut value)) as |bg|}}
+    {{#bg.button value=false}}False{{/bg.button}}
+    {{#bg.button value=true}}True{{/bg.button}}
+  {{/bs-button-group}}
+{{/form.group}}
+{{yield this}}

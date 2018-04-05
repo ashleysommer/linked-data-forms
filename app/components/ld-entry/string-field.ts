@@ -5,6 +5,18 @@ export default class LdEntryStringField extends Component.extend({
   hasLanguage: computed("language", function(this: LdEntryStringField): boolean {
     return (get(this, "language") != undefined);
   }),
+  lexicalString: computed("language", "value", function(this: LdEntryStringField){
+    const val = get(this, "value");
+    if (!val) {return undefined;}
+    const hasLanguage = get(this, "hasLanguage");
+    if (hasLanguage) {
+      const lang = get(this, "language");
+      if (lang) {
+        return `\"${val}\"@${lang}`;
+      }
+    }
+    return `\"${val}\"`;
+  }),
   actions: {
     onLangChanged(click) {
       if (!click) {

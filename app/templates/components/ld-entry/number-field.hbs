@@ -12,7 +12,7 @@
         {{/bs-dropdown}}
       </div>
     {{else}}
-      <span class="input-group-addon">Free text</span>
+      <span class="input-group-addon">Number</span>
     {{/if}}
     {{input type="text" value=(mut value) id=(concat elementId '-val') class="form-control" placeholder=placeholder}}
     {{#if showNumTypeBox}}
@@ -34,7 +34,6 @@
       Type?&nbsp;<span class="va-text-bottom">{{input type="checkbox" class="form-inline" checked=(mut showNumTypeBox)}}</span>
     </span>
     {{/if}}
-
   </div>
 {{/form.group}}
-{{yield}}
+{{yield this}}

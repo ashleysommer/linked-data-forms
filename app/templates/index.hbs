@@ -2,9 +2,11 @@
   <div class="row">
     <div class="col-md-12">
 {{#bs-form as |form|}}
-  {{ld-entry-field kind="string" value=(mut val1) label="place me here" form=form}}
+  {{#each model as |entry|}}
+      {{ld-entry-field kind=(mut (get entry 'kind')) value=(mut (get entry 'value')) label=(get entry "label") placeholder=(get entry "placeholder") form=form}}
+  {{/each}}
 {{/bs-form}}
-  {{val1}}
+
 {{outlet}}
     </div>
   </div>
